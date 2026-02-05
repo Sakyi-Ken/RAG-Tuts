@@ -47,11 +47,14 @@ def rag_retrieval(query, documents):
 
 #3. Query Augmentation: Creating Context-Rich Prompts
 def rag_generation(query, document):
-    if document:
-        snippet = f"{document['title']}: {document['content']}"
-        prompt = f"Using the following information: '{snippet}', answer: {query}"
+    if (document):
+        if (document["title"] in query):
+            snippet = f"{document['title']}: {document['content']}"
+            prompt = f"Answer this '{query}' only if this '{snippet}' has the necessary information to answer the question. Otherwise, politely refuse to provide an answer."
+        else:
+            prompt = f"No relevant information found in the document, politely refuse to provide an answer."
     else:
-        prompt = f"No relevant information found. Answer directly: {query}"
+        prompt = f"No relevant information found in the document, politely refuse to provide an answer."
     return get_llm_response(prompt)
 
 def get_llm_response(prompt):
