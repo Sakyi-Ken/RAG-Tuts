@@ -63,6 +63,7 @@ def rag_retrieval(query, knowledge_base, k=2):
 
 def rag_generation(query, documents):
     if documents:
+        # snippets = " ".join([f"{doc['title']}: {doc['content']}" for doc in documents])
         snippet = ""
         for doc in documents:
             snippet += f"{doc['title']}: {doc['content']}\n\n"
