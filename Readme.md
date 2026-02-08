@@ -2,3 +2,4 @@
 
 # Lessons
 1. Introduction to RAG
+2. Text Representation Techniques for RAG Systems
