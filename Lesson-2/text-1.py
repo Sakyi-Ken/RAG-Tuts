@@ -18,3 +18,9 @@ def bow_vectorize(text , vocab):
             index = vocab[clean_word]
             vector[index] += 1
     return vector
+
+
+def preprocess_string(text):
+    words = text.split()
+    cleaned_tokens = [word.lower().strip(".,!?") for word in words]
+    return cleaned_tokens
