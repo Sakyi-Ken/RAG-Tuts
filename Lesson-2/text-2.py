@@ -23,10 +23,31 @@ sentences = [
 ]
 
 embeddings = model.encode(sentences)
-print(embeddings.shape)  # e.g., (6, 384), depending on the model
-print(embeddings[0])     # A sample embedding for the first sentence
+# print(embeddings.shape)  # e.g., (6, 384), depending on the model
+# print(embeddings[0])     # A sample embedding for the first sentence
 
-for i, sent_i in enumerate(sentences):
-    for j, sent_j in enumerate(sentences[i+1:], start=i+1):
-        sim_score = cosine_similarity(embeddings[i], embeddings[j])
-        print(f"Similarity('{sent_i}', '{sent_j}') = {sim_score:.4f}")
+# for i, sent_i in enumerate(sentences):
+#     for j, sent_j in enumerate(sentences[i+1:], start=i+1):
+#         sim_score = cosine_similarity(embeddings[i], embeddings[j])
+#         print(f"Similarity('{sent_i}', '{sent_j}') = {sim_score:.4f}")
+
+    # TODO: Encode each sentence into its embedding vector
+
+    # TODO: Define a query sentence and compute its embedding
+
+    # TODO: Compute similarity of the query to each of the other sentences
+
+    # TODO: Sort the sentences by similarity score in descending order
+
+    # TODO: Print the sorted sentences with their similarity scores
+
+map = {}
+one_sentence = sentences[0]
+if one_sentence in sentences:
+    for j, sent_j in enumerate(sentences[1:], start=1):
+        sim_score = cosine_similarity(embeddings[0], embeddings[j])
+        map[(one_sentence, sent_j)] = sim_score
+ranked = sorted(map.items(), key=lambda x: x[1], reverse=True)
+print("Ranked sentence pairs by similarity:")
+for pair, score in ranked:
+    print(f"Similarity('{pair[0]}', '{pair[1]}') = {score:.4f}")
