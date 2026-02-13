@@ -75,16 +75,17 @@ def compute_tsne_embeddings(sentences, model_name="sentence-transformers/all-Min
     """
     model = SentenceTransformer(model_name)
     embeddings = model.encode(sentences)
-    tsne = TSNE(n_components=2, random_state=random_state, perplexity=perplexity, n_iter=n_iter)
+    tsne = TSNE(n_components=2, random_state=random_state, perplexity=perplexity, max_iter=n_iter)
     return tsne.fit_transform(embeddings)
 
-def plot_embeddings(reduced_embeddings, sentences, categories, color_map, shape_map, xlim=(-125, 150), ylim=(-175, 125)):
+def plot_embeddings(reduced_embeddings, sentences, categories, color_map, shape_map):
+    # , xlim=(-125, 150), ylim=(-175, 125)
     plt.figure(figsize=(10, 8))
 
     for i, (sentence, category) in enumerate(zip(sentences, categories)):
         x, y = reduced_embeddings[i]
         plt.scatter(x, y, color=color_map[category], marker=shape_map[category])
-        plt.text(x - 2.5, y - 7.5, sentence[:20] + "...", fontsize=9)
+        plt.text(x - 2.5, y - 1.0, sentence[:20] + "...", fontsize=9)
 
     for cat, color in color_map.items():
         plt.scatter([], [], color=color, label=cat, marker=shape_map[cat])
@@ -94,6 +95,14 @@ def plot_embeddings(reduced_embeddings, sentences, categories, color_map, shape_
     plt.xlabel("t-SNE Dimension 1", fontsize=12)
     plt.ylabel("t-SNE Dimension 2", fontsize=12)
     plt.tight_layout()
-    plt.xlim(*xlim)
-    plt.ylim(*ylim)
+    # plt.xlim(*xlim)
+    # plt.ylim(*ylim)
     plt.savefig("plot-image.png")
+    plt.show()
+
+if __name__ == "__main__":
+    sentences, categories = get_sentences_and_categories()
+    color_map, shape_map = get_color_and_shape_maps()
+
+    reduced_embeddings = compute_tsne_embeddings(sentences)
+    plot_embeddings(reduced_embeddings, sentences, categories, color_map, shape_map)
