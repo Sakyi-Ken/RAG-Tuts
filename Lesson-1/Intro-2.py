@@ -39,10 +39,10 @@ def rag_retrieval(query, documents):
     for doc_id, doc in documents.items():
         doc_words = set(doc["content"].lower().split())
         overlap = len(query_words.intersection(doc_words))
+        # TODO: Modify this function to return ALL relevant documents
+        # and not just the one with the highest overlap.
         if overlap > 0:
             docs.append(documents.get(doc_id))
-    # TODO: Modify this function to return ALL relevant documents
-    # and not just the one with the highest overlap.
     return docs
 
 
