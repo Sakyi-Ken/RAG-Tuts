@@ -6,4 +6,5 @@
     - Bag-Of-Words (BOW) Approach: _Counts words occurences and does not capture words order_
     - Embeddings: _Capture the relationship between words making similar sentences land near one another_
     - Embeddings Visualization Using t-SNE (t-distributed Stochastic Neighbour Embedding)
-3. Chucking Text for RAGS
+3. Chucking Text for RAGS.
+4. Loading and chunking text into vector databases.
