@@ -19,11 +19,15 @@ def chunk_text(text, chunk_size=10, keywords=None):
         
         # TODO: Check each word in the chunk against keywords
         # If a word is in keywords, add it to found keywords
-        if keywords:
-            for word in chunk_words:
-                if word in keywords:
-                    found_keywords.add(word)
-        
+
+        # if keywords:
+        #     for word in chunk_words:
+        #         if word in keywords:
+        #             found_keywords.add(word)
+        for word in chunk_words:
+            if word in keywords:
+                found_keywords.add(word)
+                
         chunks.append({
             "text": chunk_text,
             "keywords": list(found_keywords)
