@@ -65,3 +65,24 @@ collection.add(
 # If needed, remove the chunk by its unique ID
 # For example, if the information about bananas becomes outdated
 collection.delete(ids=[doc_id])  # Using the same ID: "chunk_2_0"
+
+def delete_documents_with_keyword(collection, keyword):
+    """
+    Deletes all documents from the given ChromaDB 'collection' whose text contains 'keyword'.
+    """
+    # TODO: Get all documents and their IDs from the collection
+    all_docs = collection.get()
+    documents = all_docs["documents"]
+    ids = all_docs["ids"]
+
+    # TODO: Create a list to store IDs of documents containing the keyword
+    ids_to_delete = []
+
+    # TODO: Iterate through documents and their IDs, adding matching document IDs to the list
+    for i, doc in enumerate(documents):
+        if keyword.lower() in doc.lower():
+            ids_to_delete.append(ids[i])
+
+    # TODO: If there are documents to delete, remove them from the collection
+    if ids_to_delete:
+        collection.delete(ids=ids_to_delete)
