@@ -86,3 +86,8 @@ def delete_documents_with_keyword(collection, keyword):
     # TODO: If there are documents to delete, remove them from the collection
     if ids_to_delete:
         collection.delete(ids=ids_to_delete)
+
+    # Alternative
+    # for doc_id, doc in zip(ids, documents):
+    #     if keyword.lower() in doc.lower():
+    #         ids_to_delete.append(doc_id)
