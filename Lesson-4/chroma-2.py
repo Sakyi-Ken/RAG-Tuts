@@ -30,6 +30,23 @@ def retrieve_top_chunks(query, collection, top_k=2):
         })
     return retrieved_chunks
 
+
+def build_prompt(query, retrieved_chunks):
+    """
+    Constructs an LLM prompt by combining multiple retrieved chunks into a
+    single context block, ensuring the model can handle longer or more detailed answers.
+    """
+    prompt = f"Question: {query}\nAnswer using only the following context:\n"
+    for rc in retrieved_chunks:
+        prompt += f"- {rc['chunk']}\n"
+    prompt += "Answer:"
+    return prompt
+
+
+def get_llm_response(final_prompt):
+    pass
+
+
 # load corpus data from JSON file
 with open("../data/corpus.json", 'r') as f:
     corpus_data = json.load(f)
@@ -43,3 +60,12 @@ collection = client.get_or_create_collection("rag_collection", embedding_functio
 documents = [doc['content'] for doc in corpus_data]
 ids = [f"chunk_{doc['id']}_0" for doc in corpus_data]
 collection.add(documents=documents, ids=ids)
+
+query = "What are some recent technological breakthroughs?"
+retrieved_docs = retrieve_top_chunks(query, collection, top_k=5)
+final_prompt = build_prompt(query, retrieved_docs)
+answer = get_llm_response(final_prompt)
+
+print("Prompt:\n")
+print(final_prompt)
+print("\nLLM Answer:", answer)
