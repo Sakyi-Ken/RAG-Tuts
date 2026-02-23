@@ -30,11 +30,12 @@ def retrieve_top_chunks(query, collection, category=None, top_k=3, distance_thre
     # For each chunk in results, check if its distance is below distance_threshold
     # If it qualifies, add it to retrieved_chunks with chunk text, doc_id, and distance
     for i in range(len(results["documents"][0])):
-        retrieved_chunks.append({
-            "chunk": results["documents"][0][i],
-            "doc_id": results["ids"][0][i],
-            "distance": results["distances"][0][i]
-        })
+        if results["distances"][0][i] <= distance_threshold:
+            retrieved_chunks.append({
+                "chunk": results["documents"][0][i],
+                "doc_id": results["ids"][0][i],
+                "distance": results["distances"][0][i]
+            })
 
     return retrieved_chunks
 
